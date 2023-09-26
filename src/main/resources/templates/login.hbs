@@ -1,0 +1,14 @@
+{{#partial "contenido" }}
+    <form method="POST" action="/login">
+      <div class="form-group">
+        <label>Nombre de usuario</label>
+        <input type="text" name="nombre_de_usuario" class="form-control" placeholder="Nombre de usuario">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" name="contrasenia" class="form-control" placeholder="Contraseña">
+      </div>
+      <button type="submit" class="btn btn-primary">Ingresar</button>
+    </form>
+{{/partial}}
+{{> templates/base }}

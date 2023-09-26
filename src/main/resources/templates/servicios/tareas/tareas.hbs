@@ -1,0 +1,28 @@
+{{#partial "contenido" }}
+    <div>
+        <h2>Tareas del Servicio {{ servicio.nombre }}</h2>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each tareas}}
+                <tr>
+                    <td>{{ this.nombre }}</td>
+                    <td>{{ this.descripcion }}</td>
+                    <td>
+                        <button class="btn btn-primary">-</button>
+                    </td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+{{/partial}}
+{{> templates/base }}

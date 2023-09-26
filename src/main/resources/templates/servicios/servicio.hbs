@@ -1,0 +1,10 @@
+{{#partial "contenido" }}
+<form method="POST" {{#if servicio}} action="/servicios/{{servicio.id}}" {{else}} action="/servicios" {{/if}}>
+	<div class="form-group">
+		<label>Nombre</label>
+		<input name="nombre" {{#if servicio}} value="{{servicio.nombre}}" {{/if}} placeholder="Nombre">
+	</div>
+	<button type="submit" class="btn btn-primary">Guardar</button>
+</form>
+{{/partial}}
+{{> templates/base }}
