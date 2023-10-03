@@ -3,7 +3,9 @@ package proservices.controllers;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
 import proservices.models.entities.servicios.Servicio;
+import proservices.models.entities.usuarios.Usuario;
 import proservices.models.repositories.RepositorioDeServicios;
+import proservices.server.exceptions.AccessDeniedException;
 import proservices.server.utils.ICrudViewsHandler;
 
 import java.util.HashMap;
@@ -11,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class ServiciosController implements ICrudViewsHandler {
+public class ServiciosController extends Controller implements ICrudViewsHandler {
     private RepositorioDeServicios repositorioDeServicios;
 
     public ServiciosController(RepositorioDeServicios repositorioDeServicios) {
@@ -36,6 +38,12 @@ public class ServiciosController implements ICrudViewsHandler {
 
     @Override
     public void create(Context context) {
+        Usuario usuarioLogueado = super.usuarioLogueado(context);
+
+        if(usuarioLogueado == null || !usuarioLogueado.getRol().tenesPermiso("crear_servicios")) {
+            throw new AccessDeniedException();
+        }
+
         Servicio servicio = null;
         Map<String, Object> model = new HashMap<>();
         model.put("servicio", servicio);

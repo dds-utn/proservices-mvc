@@ -2,6 +2,7 @@ package proservices.server;
 import proservices.controllers.FactoryController;
 import proservices.controllers.ServiciosController;
 import proservices.controllers.TareasController;
+import proservices.models.entities.usuarios.TipoRol;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
 
@@ -24,7 +25,7 @@ public class Router {
 
         Server.app().routes(() -> {
             get("servicios", ((ServiciosController) FactoryController.controller("Servicios"))::index);
-            get("servicios/crear", ((ServiciosController) FactoryController.controller("Servicios"))::create);
+            get("servicios/crear", ((ServiciosController) FactoryController.controller("Servicios"))::create, TipoRol.ADMINISTRADOR);
             get("servicios/{id}", ((ServiciosController) FactoryController.controller("Servicios"))::show);
             get("servicios/{id}/editar", ((ServiciosController) FactoryController.controller("Servicios"))::edit);
             post("servicios/{id}", ((ServiciosController) FactoryController.controller("Servicios"))::update);

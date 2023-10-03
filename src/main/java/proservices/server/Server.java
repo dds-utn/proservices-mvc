@@ -6,6 +6,10 @@ import io.javalin.Javalin;
 import io.javalin.config.JavalinConfig;
 import io.javalin.http.HttpStatus;
 import io.javalin.rendering.JavalinRenderer;
+import proservices.server.handlers.AppHandlers;
+import proservices.server.init.Initializer;
+import proservices.server.middlewares.AuthMiddleware;
+import proservices.server.utils.PrettyProperties;
 
 import java.io.IOException;
 import java.util.function.Consumer;
@@ -21,10 +25,16 @@ public class Server {
 
     public static void init() {
         if(app == null) {
+            PrettyProperties.getInstance();
             Integer port = Integer.parseInt(System.getProperty("port", "8080"));
             app = Javalin.create(config()).start(port);
             initTemplateEngine();
+            AppHandlers.applyHandlers(app);
             Router.init();
+
+            if(Boolean.parseBoolean(PrettyProperties.getInstance().propertyFromName("dev_mode"))) {
+                Initializer.init();
+            }
         }
     }
 
@@ -34,6 +44,7 @@ public class Server {
                 staticFiles.hostedPath = "/";
                 staticFiles.directory = "/public";
             });
+            AuthMiddleware.apply(config);
         };
     }
 
