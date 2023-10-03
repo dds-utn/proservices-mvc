@@ -21,7 +21,7 @@ public class AuthMiddleware {
     }
 
     private static TipoRol getUserRoleType(Context context) {
-        return context.cookie("tipo_rol") != null?
-                TipoRol.valueOf(context.cookie("tipo_rol")) : null;
+        return context.sessionAttribute("tipo_rol") != null?
+                TipoRol.valueOf(context.sessionAttribute("tipo_rol")) : null;
     }
 }
